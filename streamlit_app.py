@@ -177,7 +177,7 @@ if ticker:
             if current_price and shares:
                 summary = (
                     f"Based on your assumptions ({discount_rate*100:.0f}% discount rate and {terminal_growth*100:.1f}% perpetual growth), "
-                    f"{ticker}’s intrinsic value is estimated at ${price_target:.2f}/share, which is "
+                    f"{ticker}’s intrinsic value is estimated at ${price_target:.2f}/share, which is  "
                     f"{((price_target - current_price) / current_price) * 100:.0f}% {'above' if price_target > current_price else 'below'} "
                     f"its current market price of ${current_price:.2f}. This suggests the stock is potentially "
                     f"{'undervalued' if price_target > current_price else 'overvalued'}."
