@@ -175,14 +175,20 @@ if ticker:
             st.subheader("🧾 Optional: Executive Summary Generator")
             current_price = info.get('currentPrice', 0)
             if current_price and shares:
-                summary = (
-                    f"Based on your assumptions ({discount_rate*100:.0f}% discount rate and {terminal_growth*100:.1f}% perpetual growth), "
-                    f"{ticker}’s intrinsic value is estimated at ${price_target:.2f}/share, which is  "
-                    f"{((price_target - current_price) / current_price) * 100:.0f}% {'above' if price_target > current_price else 'below'} "
-                    f"its current market price of ${current_price:.2f}. This suggests the stock is potentially "
-                    f"{'undervalued' if price_target > current_price else 'overvalued'}."
-                )
-                st.info(summary)
+                percent_diff = ((price_target - current_price) / current_price) * 100
+                valuation_call = 'undervalued' if price_target > current_price else 'overvalued'
+                direction = 'above' if price_target > current_price else 'below'
+                summary = f"""
+                **Executive Summary**
+
+                Based on the discounted cash flow analysis using a **{discount_rate*100:.0f}% discount rate** and **{terminal_growth*100:.1f}% terminal growth**, 
+                the estimated intrinsic value of **{ticker}** is **${price_target:.2f} per share**.
+                
+                Compared to the current market price of **${current_price:.2f}**, this implies the stock is trading **{abs(percent_diff):.1f}% {direction}** its fair value.
+                
+                Therefore, based on these assumptions, **the stock appears {valuation_call}**.
+                """
+                st.markdown(summary)
 
     except KeyError as ke:
         st.error(f"Missing data field: {ke}")
