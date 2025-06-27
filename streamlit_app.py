@@ -171,13 +171,18 @@ if ticker:
             with open("Valuation_Output.xlsx", "rb") as f:
                 st.download_button("Download Excel File", f, file_name="Valuation_Output.xlsx")
 
-            # Historical FCF Chart
-            st.subheader("📉 Historical Free Cash Flow")
-            try:
-                actual_fcf = (cashflow['Total Cash From Operating Activities'] - cashflow['Capital Expenditures']) / 1e6
-                st.line_chart(actual_fcf.tail(5))
-            except:
-                st.info("Historical FCF data not available.")
+            # Executive Summary
+            st.subheader("🧾 Optional: Executive Summary Generator")
+            current_price = info.get('currentPrice', 0)
+            if current_price and shares:
+                summary = (
+                    f"Based on your assumptions ({discount_rate*100:.0f}% discount rate and {terminal_growth*100:.1f}% perpetual growth), "
+                    f"{ticker}’s intrinsic value is estimated at ${price_target:.2f}/share, which is "
+                    f"{((price_target - current_price) / current_price) * 100:.0f}% {'above' if price_target > current_price else 'below'} "
+                    f"its current market price of ${current_price:.2f}. This suggests the stock is potentially "
+                    f"{'undervalued' if price_target > current_price else 'overvalued'}."
+                )
+                st.info(summary)
 
     except KeyError as ke:
         st.error(f"Missing data field: {ke}")
