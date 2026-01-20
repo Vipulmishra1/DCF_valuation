@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 st.set_page_config(page_title="DCF Valuation", layout="centered")
 
 st.title("📈 Discounted Cash Flow (DCF) Valuation App")
-(ttl=3600, show_spinner=False)
 
 
 
