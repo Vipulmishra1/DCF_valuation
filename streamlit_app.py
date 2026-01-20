@@ -9,7 +9,7 @@ st.set_page_config(page_title="DCF Valuation", layout="centered")
 
 st.title("📈 Discounted Cash Flow (DCF) Valuation App")
 
-@st.cache_data
+@st.cache_data(ttl=3600, show_spinner=False)
 
 def get_data(ticker):
     company = yf.Ticker(ticker)
